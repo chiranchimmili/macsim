@@ -5,7 +5,7 @@ num_sim_medium_cores 0
 num_sim_large_cores 1
 large_core_type x86 
 sim_cycle_count 0
-max_insts 3000000
+max_insts 300000
 heartbeat_interval 1000000
 forward_progress_limit 1000000
 core_thread_sched balanced
@@ -34,7 +34,7 @@ isched_large_size 64
 msched_large_size 32
 fsched_large_size 96
 ssched_large_size 128
-bp_hist_length 16
+bp_hist_length 59
 rob_large_size 512
 large_core_schedule ooo
 max_threads_per_large_core 7

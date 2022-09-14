@@ -42,6 +42,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "bp.h"
 #include "bp_targ.h"
 #include "bp_gshare.h"
+#include "bp_basic_perceptron.h"
 #include "uop.h"
 #include "factory_class.h"
 #include "assert.h"
@@ -54,6 +55,8 @@ bp_dir_base_c* default_bp(macsim_c* simBase) {
   bp_dir_base_c* new_bp;
   if (bp_type == "gshare")
     new_bp = new bp_gshare_c(simBase);
+  else if (bp_type == "basic_perceptron")
+    new_bp = new bp_basic_perceptron_c(simBase);
   else
     assert(0);
 

@@ -189,7 +189,8 @@ void macsim_c::register_functions(void) {
   fetch_factory_c::get()->register_class("rr", fetch_factory);
   pref_factory_c::get()->register_class(pref_factory);
   bp_factory_c::get()->register_class("gshare", default_bp);
-
+  bp_factory_c::get()->register_class("basic_perceptron", default_bp);
+  
   llc_factory_c::get()->register_class("default", default_llc);
 
   network_factory_c::get()->register_class("ring", default_network);
