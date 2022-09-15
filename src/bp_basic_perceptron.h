@@ -1,6 +1,7 @@
 #ifndef BP_BASIC_PERCEPTRON_H_INCLUDED
 #define BP_BASIC_PERCEPTRON_H_INCLUDED
 
+#include <vector>
 #include "global_defs.h"
 #include "bp.h"
 
@@ -32,6 +33,8 @@ public:
    * Called to recover the bp when a misprediction is realized
    */
   void recover(recovery_info_c* recovery_info);
+
+  uint64_t hash(Addr addr);
 
 private:
   /**

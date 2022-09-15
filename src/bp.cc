@@ -93,6 +93,7 @@ bp_dir_base_c::bp_dir_base_c(macsim_c* simBase) {
   m_simBase = simBase;
   m_global_hist = 0;
   m_global_hist_64 = 0;
+  m_global_hist_59.reset();
 }
 
 // bp_dir_base_c destructor

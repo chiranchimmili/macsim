@@ -38,6 +38,8 @@ POSSIBILITY OF SUCH DAMAGE.
 #define UOP_H_INCLUDED
 
 #include <string>
+#include <bits/stdc++.h>
+
 
 #include "global_types.h"
 #include "global_defs.h"
@@ -538,6 +540,7 @@ public:
   bool m_l2_miss; /**< l2 miss */
   uns32 m_pred_global_hist; /**< global branch history 32-bit */
   uns64 m_pred_global_hist_64; /**< global branch history 64-bit */
+  std::bitset<59> m_pred_global_hist_59;
   int32 m_perceptron_output; /**< perceptron bp output */
   int m_btb_set; /**< btb set address */
 };
@@ -563,6 +566,7 @@ public:
 public:
   uns32 m_global_hist; /**< global branch history 32-bit */
   uns64 m_global_hist_64; /**< global branch history 64-bit */
+  std::bitset<59> m_global_hist_59;
   int m_thread_id; /**< thread id */
 };
 
