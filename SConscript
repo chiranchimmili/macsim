@@ -229,6 +229,7 @@ macsim_src = [
   'src/allocate_smc.cc',
   'src/bp.cc',
   'src/bp_gshare.cc',
+  'src/bp_basic_perceptron.cc',
   'src/bp_targ.cc',
   'src/bug_detector.cc',
   'src/cache.cc',

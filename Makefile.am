@@ -36,6 +36,7 @@ src/allocate_smc.cc          src/allocate_smc.h                        \
 src/all_stats.cc             src/all_stats.h                           \
 src/assert_macros.h                                                    \
 src/bp.cc                    src/bp.h                                  \
+src/bp_basic_perceptron.cc   src/bp_basic_perceptron.h                 \
 src/bp_gshare.cc             src/bp_gshare.h                           \
 src/bp_targ.cc               src/bp_targ.h                             \
 src/bug_detector.cc          src/bug_detector.h                        \

@@ -541,7 +541,7 @@ public:
   uns32 m_pred_global_hist; /**< global branch history 32-bit */
   uns64 m_pred_global_hist_64; /**< global branch history 64-bit */
   std::bitset<59> m_pred_global_hist_59;
-  int32 m_perceptron_output; /**< perceptron bp output */
+  int64_t m_perceptron_output; /**< perceptron bp output */
   int m_btb_set; /**< btb set address */
 };
 
