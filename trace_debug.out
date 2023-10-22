@@ -1,0 +1,1 @@
+-injection child -t obj-intel64/trace_generator.so -- /home/cchimmili3/macsim/macsim/tools/x86_trace_generator/matmul

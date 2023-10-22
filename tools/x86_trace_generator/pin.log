@@ -1,0 +1,3 @@
+Pin 2.12 kit 56747
+A: Source/pin/injector_nonmac/auxvector.cpp:CopyAux:CopyAux:291: unexpected AUX VEC type 51
+
