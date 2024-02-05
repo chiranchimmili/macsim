@@ -45,7 +45,7 @@ def build_test():
     os.system('rm -rf %s' % build_dir[ii])
     for jj in range(0, len(build_libs)+1):
       for opt in itertools.combinations(build_libs, jj):
-        cmd = 'scons -j 4 %s %s' % (build_option[ii], ' '.join(opt))
+        cmd = '/usr/bin/env python3 $(which scons) -j 4 %s %s' % (build_option[ii], ' '.join(opt))
         redir = '> /dev/null 2>&1'
 
         if os.path.exists('%s/macsim' % build_dir[ii]):
@@ -72,7 +72,7 @@ def main():
 
 
   ## Prepare scons command
-  cmd = 'scons '
+  cmd = '/usr/bin/env python3 $(which scons) '
 
   ## Main build options (opt, dbg, gpf)
   if options.debug:
