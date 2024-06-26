@@ -223,6 +223,10 @@ int exec_c::get_latency(Uop_Type uop_type) {
     return 1;
   }
 
+  if (uop_type == UOP_AMX_COMPUTE_BF16) {
+    return 100;
+  }
+
   // otherwise return original latency
   return m_latency[uop_type];
 }

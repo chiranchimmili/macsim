@@ -290,6 +290,7 @@ void get_ld_ea(ADDRINT addr, UINT32 mem_read_size,
     return;
   trace_info->vaddr1 = addr;
   trace_info->mem_read_size = mem_read_size;
+  printf("trace_info %d\n", trace_info->mem_read_size);
   trace_info->eflags = eflag_value;
 }
 
@@ -1447,6 +1448,14 @@ int main(int argc, char *argv[])
   initialize();
   sanity_check();
 
+  cout << "THIS CALLS? " << endl;
+  cout << "THIS CALLS? " << endl;
+  cout << "THIS CALLS? " << endl;
+  cout << "THIS CALLS? " << endl;
+
+  cout << "THIS CALLS? " << endl;
+  cout << "THIS CALLS? " << endl;
+  cout << "THIS CALLS? " << endl;cout << "THIS CALLS? " << endl;
   control.RegisterHandler(Handler, 0, FALSE);
   control.Activate();
 

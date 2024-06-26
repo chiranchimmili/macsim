@@ -3,6 +3,7 @@
         "istream": "cpp",
         "streambuf": "cpp",
         "*.tcc": "cpp",
-        "*.def": "cpp"
+        "*.def": "cpp",
+        "simple_mm_converter.h": "c"
     }
 }

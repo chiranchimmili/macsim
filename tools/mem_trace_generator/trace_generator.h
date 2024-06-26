@@ -94,6 +94,7 @@ struct Inst_info {
   uint64_t branch_target;       // not the dynamic info. static info  // 4 bytes
   uint8_t  mem_read_size;       // 8 bit
   uint8_t  mem_write_size;      // 8 bit
+  // uint8_t  row_stride;          // 8 bit
   bool     rep_dir;             // 1 bit
   bool     actually_taken;      // 1 ibt
 };
@@ -162,10 +163,11 @@ string tr_cf_names[15] = {
 };
 
 
-string tr_opcode_names[66] = {
+string tr_opcode_names[67] = {
   "INVALID",
   "3DNOW",
   "AES",
+  "AMX",
   "AVX",
   "AVX2", // new
   "AVX2GATHER", // new

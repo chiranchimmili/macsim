@@ -99,6 +99,7 @@ trace_uop_s::trace_uop_s() {
   m_num_dest_regs = 0;
   m_num_src_regs = 0;
   m_mem_size = 0;
+  // m_row_stride = 0;
   m_inst_size = 0;
   m_addr = 0;
   m_va = 0;
@@ -370,6 +371,37 @@ void trace_read_c::convert_info_uop(inst_info_s *info, trace_uop_s *trace_uop) {
  */
 void trace_read_c::convert_t_uop_to_info(trace_uop_s *t_uop,
                                          inst_info_s *info) {
+
+    // printf("Opcode: %hu\n", t_uop->m_opcode);
+    // printf("Operation Type: %d\n", t_uop->m_op_type); // Assuming Uop_Type is an enum
+    // printf("Memory Type: %d\n", t_uop->m_mem_type); // Assuming Mem_Type is an enum
+    // printf("Control Flow Type: %d\n", t_uop->m_cf_type); // Assuming Cf_Type is an enum
+    // printf("Barrier Type: %d\n", t_uop->m_bar_type); // Assuming Bar_Type is an enum
+    // printf("Number of Destination Registers: %d\n", t_uop->m_num_dest_regs);
+    // printf("Number of Source Registers: %d\n", t_uop->m_num_src_regs);
+    // printf("Memory Size: %d bytes\n", t_uop->m_mem_size);
+    // printf("Instruction Size: %d bytes\n", t_uop->m_inst_size);
+    // printf("PC Address: %llu\n", t_uop->m_addr); // Format depends on Addr type definition
+    // // For m_srcs and m_dests, consider iterating over them if needed to print their details
+    // printf("Virtual Address: %llu\n", t_uop->m_va); // Format depends on Addr type definition
+    // printf("Branch Actually Taken: %s\n", t_uop->m_actual_taken ? "true" : "false");
+    // printf("Branch Target Address: %llu\n", t_uop->m_target); // Format depends on Addr type definition
+    // printf("Next PC Address: %llu\n", t_uop->m_npc); // Format depends on Addr type definition
+    // printf("Has Second Memory Operation: %s\n", t_uop->m_pin_2nd_mem ? "true" : "false");
+    // // For m_info, you might want to print specific fields from the pointed-to structure
+    // printf("Repeated uop Number: %d\n", t_uop->m_rep_uop_num);
+    // printf("End of Macro: %s\n", t_uop->m_eom ? "true" : "false");
+    // printf("ALU uop: %s\n", t_uop->m_alu_uop ? "true" : "false");
+    // printf("Is Parent Uop: %s\n", t_uop->m_is_parent ? "true" : "false");
+    // printf("Number of Children: %u\n", t_uop->m_num_children);
+    // printf("Active Mask: %u\n", t_uop->m_active_mask);
+    // printf("Taken Mask: %u\n", t_uop->m_taken_mask);
+    // printf("Reconvergence Address: %llu\n", t_uop->m_reconverge_addr); // Format depends on Addr type definition
+    // printf("Multiple Memory Transactions: %s\n", t_uop->m_mul_mem_uops ? "true" : "false");
+    // printf("HMC Instruction Type: %d\n", t_uop->m_hmc_inst); // Assuming HMC_Type is an enum
+    // printf("HMC Transaction ID: %lu\n", t_uop->m_hmc_trans_id);
+    // printf("\n\n\n");
+
   info->m_table_info->m_op_type = t_uop->m_op_type;
   info->m_table_info->m_mem_type = t_uop->m_mem_type;
   info->m_table_info->m_cf_type = t_uop->m_cf_type;
@@ -383,6 +415,9 @@ void trace_read_c::convert_t_uop_to_info(trace_uop_s *t_uop,
   info->m_trace_info.m_inst_size = (t_uop->m_inst_size);
   info->m_table_info->m_num_src_regs = t_uop->m_num_src_regs;
   info->m_table_info->m_num_dest_regs = t_uop->m_num_dest_regs;
+  
+
+
 
   ASSERTM(t_uop->m_num_dest_regs <= MAX_DESTS, "num_dest_regs:%d ",
           t_uop->m_num_dest_regs);
@@ -513,7 +548,16 @@ const char *trace_read_c::g_tr_reg_names[MAX_TR_REG] = {
   "inst_g19d", "inst_g20d",   "inst_g21d",
   "inst_g22d", "inst_g23d",   "inst_g24d",
   "inst_g25d", "inst_g26d",   "inst_g27d",
-  "inst_g28d", "inst_g29d",
+  "inst_g28d", "inst_g29d",     "tmm0",
+    "tmm1",
+    "tmm2",
+    "tmm3",
+    "tmm4",
+    "tmm5",
+    "tmm6",
+    "tmm7",
+    "tilecfg",
+    "tiledata",
 };
 
 const char *trace_read_c::g_tr_opcode_names[MAX_TR_OPCODE_NAME] = {
@@ -521,6 +565,7 @@ const char *trace_read_c::g_tr_opcode_names[MAX_TR_OPCODE_NAME] = {
   "3DNOW",
   "ADOX_ADCX",
   "AES",
+  "AMX",
   "AVX",
   "AVX2",
   "AVX2GATHER",

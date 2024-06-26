@@ -30,10 +30,10 @@ typedef struct trace_info_cpu_s {
   uint64_t m_branch_target;     /**< branch target address */
   uint8_t  m_mem_read_size;     /**< memory read size */
   uint8_t  m_mem_write_size;    /**< memory write size */
+  // uint8_t  m_row_stride;
   bool     m_rep_dir;           /**< repetition direction */
   bool     m_actually_taken;    /**< branch actually taken */
 } trace_info_cpu_s;
-
 
 
 
@@ -41,6 +41,7 @@ typedef enum CPU_OPCODE_ENUM_ {
   XED_CATEGORY_INVALID,
   XED_CATEGORY_3DNOW,
   XED_CATEGORY_AES,
+  XED_CATEGORY_AMX,
   XED_CATEGORY_AVX,
   XED_CATEGORY_AVX2, // new
   XED_CATEGORY_AVX2GATHER, // new

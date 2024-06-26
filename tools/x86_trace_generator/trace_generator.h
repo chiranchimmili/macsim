@@ -90,6 +90,7 @@ struct Inst_info
   uint64_t branch_target;    // not the dynamic info. static info  // 4 bytes
   uint8_t mem_read_size;     // 8 bit
   uint8_t mem_write_size;    // 8 bit
+  // uint32_t row_stride;
   bool rep_dir;              // 1 bit
   bool actually_taken;       // 1 ibt
 };
@@ -109,6 +110,7 @@ struct Trace_info
   uint32_t actually_taken;
   uint32_t mem_read_size;
   uint32_t mem_write_size;
+  // uint32_t row_stride;
   uint32_t eflags;
   ofstream *debug_stream;
 };
@@ -155,11 +157,12 @@ string tr_cf_names[10] = {
     "CF_SYS",
     "CF_ICBR"};
 
-string tr_opcode_names[106] = {
+string tr_opcode_names[107] = {
     "INVALID",
     "3DNOW",
     "ADOX_ADCX",
     "AES",
+    "AMX",
     "AVX",
     "AVX2",
     "AVX2GATHER",

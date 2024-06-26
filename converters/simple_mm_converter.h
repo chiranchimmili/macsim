@@ -29,6 +29,32 @@ typedef struct {
     int write_flg;
 } TraceInfo;
 
+struct Inst_info
+{
+  uint8_t num_read_regs;    // 3-bits
+  uint8_t num_dest_regs;    // 3-bits
+  uint8_t src[9]; // increased in 2019 version // 6-bits * 4 // back to 8
+  uint8_t dst[6]; // increased in 2019 version  6-bits * 4 // back to 8
+  uint8_t cf_type;          // 4 bits
+  bool has_immediate;       // 1bits
+  uint8_t opcode;           // 6 bits
+  bool has_st;              // 1 bit
+  bool is_fp;               // 1 bit
+  bool write_flg;           // 1 bit
+  uint8_t num_ld;           // 2 bit
+  uint8_t size;             // 5 bit
+  // **** dynamic ****
+  uint64_t ld_vaddr1;        // 4 bytes
+  uint64_t ld_vaddr2;        // 4 bytes
+  uint64_t st_vaddr;         // 4 bytes
+  uint64_t instruction_addr; // 4 bytes
+  uint64_t branch_target;    // not the dynamic info. static info  // 4 bytes
+  uint8_t mem_read_size;     // 8 bit
+  uint8_t mem_write_size;    // 8 bit
+  bool rep_dir;              // 1 bit
+  bool actually_taken;       // 1 ibt
+};
+
 
 char* regs[330] = {
   "*invalid*",

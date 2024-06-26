@@ -103,6 +103,9 @@ switch(inst->m_opcode){
  case  PIN212_XED_CATEGORY_AES:
       inst->m_opcode = XED_CATEGORY_AES;
       break; 
+ case PIN212_XED_CATEGORY_AMX:
+      inst->m_opcode = XED_CATEGORY_AMX;
+      break; 
  case  PIN212_XED_CATEGORY_AVX:
       inst->m_opcode = XED_CATEGORY_AVX;
       break; 
@@ -501,6 +504,7 @@ char* trace_reader_c::tr_opcode_names_pin311[MAX_TR_OPCODE] = {
   "3DNOW",
   "ADOX_ADCX",
   "AES",
+  "AMX",
   "AVX",
   "AVX2",
   "AVX2GATHER",
@@ -693,6 +697,7 @@ char* trace_reader_c::tr_opcode_names_pin212[MAX_TR_OPCODE] = {
 	 "INVALID",
   "3DNOW",
   "AES",
+  "AMX",
   "AVX",
   "AVX2",
   "AVX2GATHER",

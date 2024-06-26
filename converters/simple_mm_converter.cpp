@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <zlib.h>
 
 #include "simple_mm_converter.h"
 
@@ -7,10 +8,10 @@
 #define MEMORY_SIZE (32LL * (1LL << 30)) // size in GB, the LL denotes long long
 #define MEMORY_END (32LL * (1LL << 30))
 
-#define MATRIX_A_M 8
+#define MATRIX_A_M 4
 #define MATRIX_A_N 8
 #define MATRIX_B_M 8
-#define MATRIX_B_N 1
+#define MATRIX_B_N 6
 
 #define RESULT_M MATRIX_A_M
 #define RESULT_N MATRIX_B_N
@@ -59,7 +60,48 @@ void print_trace_info(TraceInfo* t_info, FILE* file) {
     fprintf(file, "*** end of the data structure ***\n\n");
 }
 
+void write_trace_info_to_gz(TraceInfo* t_info, gzFile gzfile) {
+
+    Inst_info *info = new Inst_info;
+    info->num_read_regs = t_info->num_read_regs;
+    info->num_dest_regs = t_info->num_dest_regs;
+    
+    if (t_info->num_read_regs >= 1) {
+        info->src[0] = t_info->src0;
+        if (t_info->num_read_regs > 1) {
+            info->src[1] = t_info->src1;
+        }
+    }
+    if (t_info->num_dest_regs >= 1) {
+        info->dst[0] = t_info->dst0;
+        if (t_info->num_dest_regs > 1) {
+            info->dst[1] = t_info->dst1;
+        }
+    }
+
+    info->cf_type = 0; // hardcoded to zero since there are no control flow instructions
+    info->has_immediate = t_info->has_immediate;
+    info->opcode = t_info->uop_opcode_num;
+    info->has_st = t_info->has_st;
+    info->is_fp = t_info->is_fp;
+    info->write_flg = t_info->write_flg;
+    info->num_ld = t_info->num_ld;
+    info->size = 8;
+    info->ld_vaddr1 = t_info->ld_vaddr1;
+    info->ld_vaddr2 = t_info->ld_vaddr2;
+    info->st_vaddr = t_info->st_vaddr;
+    info->instruction_addr = t_info->instruction_addr;
+    info->branch_target = t_info->branch_target;
+    info->mem_read_size = t_info->mem_read_size;
+    info->mem_write_size = t_info->mem_write_size;
+    info->rep_dir = t_info->r_dir;
+    info->actually_taken = t_info->actually_taken;
+    gzwrite(gzfile, info, sizeof(Inst_info));
+}
+
 int main() {
+
+    gzFile gz_outputFile = gzopen("output.raw", "wb");
     FILE *outputFile = fopen("output.txt", "w");
 
     printf("Memory Start: %llx\n", (unsigned long long)MEMORY_START);
@@ -78,7 +120,7 @@ int main() {
     t_info.ld_vaddr1 = 0;
     t_info.ld_vaddr2 = 0;
     t_info.st_vaddr = 0;
-    t_info.instruction_addr = 0; // FIX
+    t_info.instruction_addr = 0x400000; // FIX
     t_info.branch_target = 0;
     t_info.actually_taken = 0;
     t_info.write_flg = 0;
@@ -88,22 +130,24 @@ int main() {
             uint64_t result_address = RESULT_START + i * RESULT_N * 4 + j * 4;
 
             // MOV Operation
-            t_info.uop_opcode_num = 30; 
+            t_info.uop_opcode_num = 31; 
             t_info.uop_opcode = "DATAXFER";
             t_info.num_read_regs = 0;
             t_info.num_dest_regs = 1;
             t_info.dst0 = 9;
             t_info.has_immediate = 1;
             t_info.mem_read_size = 0;
-            t_info.instruction_addr = 0; // FIX
+            t_info.instruction_addr++; // FIX
             print_trace_info(&t_info, outputFile);
+            write_trace_info_to_gz(&t_info, gz_outputFile);
+
 
             for (int k = 0; k < MATRIX_A_N; k++) {
                 uint64_t matrix_a_address = MATRIX_A_START + i * MATRIX_A_N * 4 + k * 4;
                 uint64_t matrix_b_address = MATRIX_B_START + k * MATRIX_B_N * 4 + j * 4;
                 
                 // LOAD operation for matrix_a
-                t_info.uop_opcode_num = 30;
+                t_info.uop_opcode_num = 31;
                 t_info.uop_opcode = "DATAXFER";
                 t_info.num_read_regs = 0;
                 t_info.num_dest_regs = 1;
@@ -113,18 +157,20 @@ int main() {
                 t_info.num_ld = 1;
                 t_info.ld_vaddr1 = matrix_a_address;
                 t_info.mem_write_size = 0;
-                t_info.instruction_addr = 0; // FIX
+                t_info.instruction_addr++; // FIX
 
                 print_trace_info(&t_info, outputFile);
+                write_trace_info_to_gz(&t_info, gz_outputFile);
 
                 // LOAD operation for matrix_b
                 t_info.dst0 = 7;
                 t_info.ld_vaddr1 = matrix_b_address;
-                t_info.instruction_addr = 0; // FIX
+                t_info.instruction_addr++; // FIX
                 print_trace_info(&t_info, outputFile);
+                write_trace_info_to_gz(&t_info, gz_outputFile);
 
                 // MUL operation
-                t_info.uop_opcode_num = 95;
+                t_info.uop_opcode_num = 96;
                 t_info.uop_opcode = "TR_MUL";
                 t_info.num_read_regs = 2;
                 t_info.num_dest_regs = 2;
@@ -134,24 +180,26 @@ int main() {
                 t_info.dst1 = 25;
                 t_info.num_ld = 0;
                 t_info.ld_vaddr1 = 0;
-                t_info.mem_read_size = 0;
-                t_info.instruction_addr = 0; // FIX
+                t_info.mem_read_size++;
+                t_info.instruction_addr++; // FIX
 
                 print_trace_info(&t_info, outputFile);
+                write_trace_info_to_gz(&t_info, gz_outputFile);
 
                 // ADD operation
-                t_info.uop_opcode_num = 13;
+                t_info.uop_opcode_num = 14;
                 t_info.uop_opcode = "BINARY";
                 t_info.src0 = 9;
                 t_info.src1 = 8;
                 t_info.dst0 = 9;
                 t_info.dst1 = 25;
-                t_info.instruction_addr = 0; // FIX
+                t_info.instruction_addr++; // FIX
                 print_trace_info(&t_info, outputFile);
+                write_trace_info_to_gz(&t_info, gz_outputFile);
             }
 
             // STORE operation for result
-            t_info.uop_opcode_num = 30; 
+            t_info.uop_opcode_num = 31; 
             t_info.uop_opcode = "DATAXFER";
             t_info.st_vaddr = result_address;
             t_info.num_read_regs = 1;
@@ -159,11 +207,30 @@ int main() {
             t_info.src0 = 9;
             t_info.mem_write_size = 4;
             t_info.has_st = 1; 
-            t_info.instruction_addr = 0; // FIX
+            t_info.instruction_addr++; // FIX
             print_trace_info(&t_info, outputFile);
+            write_trace_info_to_gz(&t_info, gz_outputFile);
         }
     }
 
+        // NOP instruction
+    t_info.uop_opcode_num = 51;
+    t_info.uop_opcode = "NOP";
+    t_info.num_read_regs = 0;
+    t_info.num_dest_regs = 0;
+    t_info.src0 = 0;
+    t_info.src1 = 0;
+    t_info.dst0 = 0;
+    t_info.dst1 = 0;
+    t_info.has_st = 0;
+    t_info.st_vaddr = 0;
+    t_info.mem_write_size = 0;
+    t_info.instruction_addr+=4;
+    print_trace_info(&t_info, outputFile);
+    write_trace_info_to_gz(&t_info, gz_outputFile);
+
     fclose(outputFile);
+    gzclose(gz_outputFile);
+
     return 0;
 }

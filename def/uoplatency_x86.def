@@ -56,6 +56,8 @@ DEFUOP( UOP_VADD,    1) // not used in regular x86
 DEFUOP( UOP_VSTR,    1) // not used in regular x86
 DEFUOP( UOP_VFADD,   1) // not used in regular x86
 DEFUOP( UOP_AES,     1) // not used in regular x86
+// DEFUOP( UOP_AMX,     4) // fix
+DEFUOP( UOP_AMX_COMPUTE_BF16,     100)
 DEFUOP( UOP_PCLMUL,  1) // not used in regular x86
 DEFUOP( UOP_X87,     1) // not used in regular x86
 DEFUOP( UOP_XSAVE,   1) // not used in regular x86

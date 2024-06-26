@@ -48,7 +48,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-#define MAX_TR_REG 321
+#define MAX_TR_REG 341
 //#define MAX_TR_OPCODE_NAME GPU_OPCODE_LAST
 #define REP_MOV_MEM_SIZE_MAX 4
 #define REP_MOV_MEM_SIZE_MAX_NEW \
@@ -95,6 +95,7 @@ typedef struct trace_info_cpu_s {
   uint64_t m_branch_target; /**< branch target address */
   uint8_t m_mem_read_size; /**< memory read size */
   uint8_t m_mem_write_size; /**< memory write size */
+  // uint8_t row_stride;
   bool m_rep_dir; /**< repetition direction */
   bool m_actually_taken; /**< branch actually taken */
   uint64_t
@@ -122,6 +123,7 @@ typedef struct trace_info_a64_s {
   uint64_t m_branch_target; /**< branch target address */
   uint8_t m_mem_read_size; /**< memory read size */
   uint8_t m_mem_write_size; /**< memory write size */
+  // uint8_t row_stride;
   bool m_rep_dir; /**< repetition direction */
   bool m_actually_taken; /**< branch actually taken */
   uint64_t
@@ -243,6 +245,7 @@ typedef struct trace_uop_s {
   int m_num_dest_regs; /**< number of destination registers written */
   int m_num_src_regs; /**< number of source registers read */
   int m_mem_size; /**< number of bytes read/written by a memory instruction */
+  // int m_row_stride;
   int m_inst_size; /**< instruction size */
   Addr m_addr; /**< pc address */
   reg_info_s m_srcs[MAX_SRCS]; /**< source register information */
@@ -286,6 +289,7 @@ typedef enum CPU_OPCODE_ENUM_ {
   XED_CATEGORY_3DNOW,
   XED_CATEGORY_ADOX_ADCX,
   XED_CATEGORY_AES,
+  XED_CATEGORY_AMX,
   XED_CATEGORY_AVX,
   XED_CATEGORY_AVX2,
   XED_CATEGORY_AVX2GATHER,

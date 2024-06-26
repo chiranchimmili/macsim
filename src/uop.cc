@@ -127,7 +127,8 @@ const char *uop_c::g_uop_type_name[NUM_UOP_TYPES] = {"UOP_INV",
                                                      "UOP_SSE",
                                                      "UOP_SIMD",
                                                      "UOP_AES",  // NEW
-                                                     "UOP_PCLMUL",  // NEW
+                                                     "UOP_AMX_COMPUTE_BF16",
+                                                     "UOP_PCLMUL",// NEW
                                                      "UOP_X87",  // NEW
                                                      "UOP_XSAVE",  // NEW
                                                      "UOP_XSAVEOPT",  // NEW

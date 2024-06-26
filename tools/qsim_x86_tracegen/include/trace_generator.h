@@ -135,6 +135,7 @@ std::string tr_opcode_names[67] = {
   "INVALID",
   "3DNOW",
   "AES",
+  "AMX",
   "AVX",
   "AVX2", // new
   "AVX2GATHER", // new
